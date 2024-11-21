@@ -33,8 +33,8 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
         'Content-Length': req.file.buffer.length,
       },
       responseType: 'arraybuffer', // Expect binary response
-      maxContentLength: 50 * 1024 * 1024, // 50 MB limit
-      maxBodyLength: 50 * 1024 * 1024, // 50 MB limit
+      maxContentLength: Infinity, // Allow large content lengths
+      maxBodyLength: Infinity, // Allow large body lengths
     });
 
     res.set('Content-Type', 'image/png');
