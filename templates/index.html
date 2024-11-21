@@ -80,8 +80,8 @@ https://templatemo.com/tm-562-space-dynamic
     }
 
     #file-list p {
-      margin-top:15px!important;
-      margin-bottom: 10px!important;
+      margin-top: 15px !important;
+      margin-bottom: 10px !important;
       background-color: rgb(255, 255, 255);
       /* White background for text */
       padding: 10px;
@@ -94,6 +94,7 @@ https://templatemo.com/tm-562-space-dynamic
       z-index: 2;
       /* Ensure this element is above others */
     }
+
     .spinner {
       display: none;
       margin-left: 10px;
@@ -109,6 +110,7 @@ https://templatemo.com/tm-562-space-dynamic
       0% {
         transform: rotate(0deg);
       }
+
       100% {
         transform: rotate(360deg);
       }
@@ -201,7 +203,9 @@ https://templatemo.com/tm-562-space-dynamic
                   </form>
                 </div> -->
                 <div style="margin-top: 100px;">
-                  <form id="upload-form" class="upload-form" action="https://node-js-server-fuxf.onrender.com/process-image" method="POST" enctype="multipart/form-data">
+                  <form id="upload-form" class="upload-form"
+                    action="https://node-js-server-fuxf.onrender.com/process-image" method="POST"
+                    enctype="multipart/form-data">
                     <h1>Upload Image to be Enhanced</h1>
                     <label class="custom-file-input">
                       Choose a file
@@ -213,10 +217,12 @@ https://templatemo.com/tm-562-space-dynamic
                     </div>
                   </form>
                   <div>
-                    <fieldset id="file-list" style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
+                    <fieldset id="file-list"
+                      style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
                     </fieldset>
                   </div>
-                  <div id="processed-image-list" style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
+                  <div id="processed-image-list"
+                    style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
                   </div>
                 </div>
 
@@ -546,12 +552,14 @@ https://templatemo.com/tm-562-space-dynamic
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
+                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email"
+                    required="">
                 </fieldset>
               </div>
               <div class="col-lg-12">
                 <fieldset>
-                  <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                  <textarea name="message" type="text" class="form-control" id="message" placeholder="Message"
+                    required=""></textarea>
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -620,7 +628,7 @@ https://templatemo.com/tm-562-space-dynamic
       }
     });
     //image processing
-    document.getElementById('upload-form').addEventListener('submit', function(event) {
+    document.getElementById('upload-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const formData = new FormData(this);
       const spinner = document.getElementById('spinner');
@@ -628,34 +636,28 @@ https://templatemo.com/tm-562-space-dynamic
 
       fetch('https://node-js-server-fuxf.onrender.com/process-image', {
         method: 'POST',
-        body: formData,
+        body: formData
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok: ' + response.statusText);
-        }
-        return response.blob(); // Expecting an image blob
-      })
-      .then(imageBlob => {
-        spinner.style.display = 'none'; // Hide the spinner
-        console.log('Received imageBlob:', imageBlob); // Log the Blob
-        try {
-          const imageUrl = URL.createObjectURL(imageBlob);
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          spinner.style.display = 'none'; // Hide the spinner
+          const url = URL.createObjectURL(blob);
           const link = document.createElement('a');
-          link.href = imageUrl;
-          link.download = 'enhanced_image.png'; // Download filename
+          link.href = url;
+          link.download = 'enhanced_image.png';
           link.textContent = 'Download Enhanced Image';
           document.getElementById('file-list').appendChild(link);
-        } catch (error) {
-          console.error('Error creating object URL:', error);
+        })
+        .catch(error => {
+          spinner.style.display = 'none'; // Hide the spinner
+          console.error('Error:', error);
           alert('There was an error processing the image. Please try again.');
-        }
-      })
-      .catch(error => {
-        spinner.style.display = 'none'; // Hide the spinner
-        console.error('Error:', error);
-        alert('There was an error processing the image. Please try again.');
-      });
+        });
     });
 
     // Email sending script
