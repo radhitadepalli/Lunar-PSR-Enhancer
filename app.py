@@ -62,7 +62,7 @@ def process_image():
         return send_file(img_byte_arr, mimetype='image/png')
     except Exception as e:
         print(f"Error processing image: {e}")
-        return 'Error processing image.', 500
+        return f'Error processing image: {e}', 500
 
 if __name__ == '__main__':
     from waitress import serve

@@ -26,7 +26,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: 'https://node-js-server-fuxf.onrender.com/process-image',
+      url: 'https://your-flask-server-url.onrender.com/process-image',
       data: req.file.buffer,
       headers: {
         'Content-Type': 'application/octet-stream',
@@ -68,6 +68,6 @@ app.post('/send-email', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT,'0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
