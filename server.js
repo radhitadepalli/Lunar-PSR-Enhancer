@@ -8,8 +8,8 @@ const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json({ limit: '100mb' })); // Increase body parser limit
-app.use(bodyParser.urlencoded({ limit: '100mb', extended: true })); // Increase body parser limit
+app.use(bodyParser.json({ limit: '50mb' })); // Increase body parser limit
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Increase body parser limit
 
 // Set up multer for file uploads
 const upload = multer({ limits: { fileSize: 50 * 1024 * 1024 } }); // 50 MB limit
@@ -33,8 +33,8 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
         'Content-Length': req.file.buffer.length,
       },
       responseType: 'arraybuffer', // Expect binary response
-      maxContentLength: 100 * 1024 * 1024, // 50 MB limit
-      maxBodyLength: 100 * 1024 * 1024, // 50 MB limit
+      maxContentLength: 50 * 1024 * 1024, // 50 MB limit
+      maxBodyLength: 50 * 1024 * 1024, // 50 MB limit
     });
 
     res.set('Content-Type', 'image/png');
