@@ -26,7 +26,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: 'https://your-flask-server-url.onrender.com/process-image',
+      url: 'http://localhost:5000/process-image', // Flask server URL
       data: req.file.buffer,
       headers: {
         'Content-Type': 'application/octet-stream',
