@@ -11,6 +11,19 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '1gb' })); // Increase body parser limit to 1 GB
 app.use(bodyParser.urlencoded({ limit: '1gb', extended: true })); // Increase body parser limit to 1 GB
 
+
+const corsOptions = {
+  origin: 'https://lunar-psr-enhancer.onrender.com',
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
+
+
+
+
+
 // Set up multer for file uploads
 const upload = multer({ limits: { fileSize: 1024 * 1024 * 1024 } }); // 1 GB limit
 
