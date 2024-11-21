@@ -8,10 +8,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-
 # Set maximum content length to handle large file uploads
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB limit
-
 
 def load_image(image_bytes):
     image = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
