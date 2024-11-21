@@ -4,12 +4,17 @@ import numpy as np
 from skimage import exposure
 import io
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 # Set maximum content length to handle large file uploads
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024  # 1 GB limit
+
+# Enable debug mode if FLASK_ENV is set to development
+if os.getenv('FLASK_ENV') == 'development':
+    app.config['DEBUG'] = True
 
 def load_image(image_bytes):
     try:
