@@ -84,38 +84,44 @@ def process_image():
         image = load_image(request.data)
         if image is None:
             return 'Failed to load image.', 400
+        print("Image loaded successfully")
 
         # Apply contrast stretching
         contrast_image = contrast_stretching(image)
         if contrast_image is None:
             return 'Failed to apply contrast stretching.', 500
+        print("Contrast stretching applied")
 
         # Apply gamma correction
         gamma_corrected_image = gamma_correction(contrast_image, gamma=1.8)
         if gamma_corrected_image is None:
             return 'Failed to apply gamma correction.', 500
+        print("Gamma correction applied")
 
         # Apply multi-scale retinex
         msr_image = multi_scale_retinex(gamma_corrected_image)
         if msr_image is None:
             return 'Failed to apply multi-scale retinex.', 500
+        print("Multi-scale retinex applied")
 
         # Apply adaptive histogram equalization
         equalized_image = adaptive_histogram_equalization(msr_image)
         if equalized_image is None:
             return 'Failed to apply adaptive histogram equalization.', 500
+        print("Adaptive histogram equalization applied")
 
         # Encode image to PNG
         img_byte_arr = io.BytesIO()
         success, encoded_image = cv2.imencode('.png', equalized_image)
         if not success:
             return 'Failed to encode image.', 500
-
         img_byte_arr.write(encoded_image)
         img_byte_arr.seek(0)
+        print("Image encoding completed successfully")
 
         return send_file(img_byte_arr, mimetype='image/png')
     except Exception as e:
+        print(f"Error processing image: {e}")
         return f'Error processing image: {e}', 500
 
 if __name__ == '__main__':
