@@ -50,10 +50,19 @@ def process_image():
         print(f"Received {len(request.data)} bytes of data")  # Debugging
 
         image = load_image(request.data)
+        print("Image loaded successfully")  # Debugging
+
         contrast_image = contrast_stretching(image)
+        print("Contrast stretching applied")  # Debugging
+
         gamma_corrected_image = gamma_correction(contrast_image, gamma=1.8)
+        print("Gamma correction applied")  # Debugging
+
         msr_image = multi_scale_retinex(gamma_corrected_image)
+        print("Multi-scale retinex applied")  # Debugging
+
         equalized_image = adaptive_histogram_equalization(msr_image)
+        print("Adaptive histogram equalization applied")  # Debugging
 
         img_byte_arr = io.BytesIO()
         success, encoded_image = cv2.imencode('.png', equalized_image)
@@ -62,6 +71,7 @@ def process_image():
         img_byte_arr.write(encoded_image)
         img_byte_arr.seek(0)
 
+        print("Image processing completed successfully")  # Debugging
         return send_file(img_byte_arr, mimetype='image/png')
     except Exception as e:
         print(f"Error processing image: {e}")
