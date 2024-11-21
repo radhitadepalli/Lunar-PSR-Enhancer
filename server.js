@@ -26,7 +26,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: 'http://localhost:5000/process-image',
+      url: 'https://node-js-server-fuxf.onrender.com/process-image',
       data: req.file.buffer,
       headers: {
         'Content-Type': 'application/octet-stream',

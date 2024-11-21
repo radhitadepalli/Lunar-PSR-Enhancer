@@ -201,7 +201,8 @@ https://templatemo.com/tm-562-space-dynamic
                   </form>
                 </div> -->
                 <div style="margin-top: 100px;">
-                  <form id="upload-form" class="upload-form" action="http://localhost:3000/process-image" method="POST" enctype="multipart/form-data">
+                  <!-- http://localhost:3000/process-image -->
+                  <form id="upload-form" class="upload-form" action="https://node-js-server-fuxf.onrender.com/process-image" method="POST" enctype="multipart/form-data">
                     <h1>Upload Image to be Enhanced</h1>
                     <label class="custom-file-input">
                       Choose a file
@@ -631,7 +632,7 @@ https://templatemo.com/tm-562-space-dynamic
       const spinner = document.getElementById('email-spinner');
       spinner.style.display = 'inline-block'; // Show the spinner
 
-      fetch('http://localhost:3000/send-email', {
+      fetch('https://node-js-server-fuxf.onrender.com/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -658,7 +659,7 @@ https://templatemo.com/tm-562-space-dynamic
       const spinner = document.getElementById('spinner');
       spinner.style.display = 'inline-block'; // Show the spinner
 
-      fetch('http://localhost:3000/process-image', {
+      fetch('https://node-js-server-fuxf.onrender.com/process-image', {
         method: 'POST',
         body: formData,
       })
