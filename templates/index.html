@@ -621,34 +621,42 @@ https://templatemo.com/tm-562-space-dynamic
     });
 
     // Email sending script
-    document.getElementById('contact').addEventListener('submit', function (event) {
+    document.getElementById('upload-form').addEventListener('submit', function(event) {
       event.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const surname = document.getElementById('surname').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      const spinner = document.getElementById('email-spinner');
+      const formData = new FormData(this);
+      const spinner = document.getElementById('spinner');
       spinner.style.display = 'inline-block'; // Show the spinner
 
-      fetch('https://node-js-server-fuxf.onrender.com/send-email', {
+      fetch('https://node-js-server-fuxf.onrender.com/process-image', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name, surname, email, message })
+        body: formData,
       })
-        .then(response => response.text())
-        .then(data => {
-          spinner.style.display = 'none'; // Hide the spinner
-          document.getElementById('contact').reset();
-          alert('Email sent successfully!');
-        })
-        .catch(error => {
-          spinner.style.display = 'none'; // Hide the spinner
-          console.error('Error:', error);
-          alert('Failed to send email.');
-        });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        return response.blob(); // Expecting an image blob
+      })
+      .then(imageBlob => {
+        spinner.style.display = 'none'; // Hide the spinner
+        console.log('Received imageBlob:', imageBlob); // Log the Blob
+        try {
+          const imageUrl = URL.createObjectURL(imageBlob);
+          const link = document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'enhanced_image.png'; // Download filename
+          link.textContent = 'Download Enhanced Image';
+          document.getElementById('file-list').appendChild(link);
+        } catch (error) {
+          console.error('Error creating object URL:', error);
+          alert('There was an error processing the image. Please try again.');
+        }
+      })
+      .catch(error => {
+        spinner.style.display = 'none'; // Hide the spinner
+        console.error('Error:', error);
+        alert('There was an error processing the image. Please try again.');
+      });
     });
 
     // Image processing script
