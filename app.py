@@ -72,38 +72,50 @@ def adaptive_histogram_equalization(image):
 @app.route('/process-image', methods=['POST'])
 def process_image():
     if not request.data:
-        print("No file uploaded.")  # Debugging statement
         return 'No file uploaded.', 400
 
     try:
-        print(f"Received {len(request.data)} bytes of data")  # Debugging
+        # Check if data is received
+        data_length = len(request.data)
+        if data_length == 0:
+            return 'No data received.', 400
 
+        # Load image
         image = load_image(request.data)
-        print("Image loaded successfully")  # Debugging
+        if image is None:
+            return 'Failed to load image.', 400
 
+        # Apply contrast stretching
         contrast_image = contrast_stretching(image)
-        print("Contrast stretching applied")  # Debugging
+        if contrast_image is None:
+            return 'Failed to apply contrast stretching.', 500
 
+        # Apply gamma correction
         gamma_corrected_image = gamma_correction(contrast_image, gamma=1.8)
-        print("Gamma correction applied")  # Debugging
+        if gamma_corrected_image is None:
+            return 'Failed to apply gamma correction.', 500
 
+        # Apply multi-scale retinex
         msr_image = multi_scale_retinex(gamma_corrected_image)
-        print("Multi-scale retinex applied")  # Debugging
+        if msr_image is None:
+            return 'Failed to apply multi-scale retinex.', 500
 
+        # Apply adaptive histogram equalization
         equalized_image = adaptive_histogram_equalization(msr_image)
-        print("Adaptive histogram equalization applied")  # Debugging
+        if equalized_image is None:
+            return 'Failed to apply adaptive histogram equalization.', 500
 
+        # Encode image to PNG
         img_byte_arr = io.BytesIO()
         success, encoded_image = cv2.imencode('.png', equalized_image)
         if not success:
-            raise ValueError("Failed to encode image.")
+            return 'Failed to encode image.', 500
+
         img_byte_arr.write(encoded_image)
         img_byte_arr.seek(0)
 
-        print("Image processing completed successfully")  # Debugging
         return send_file(img_byte_arr, mimetype='image/png')
     except Exception as e:
-        print(f"Error processing image: {e}")
         return f'Error processing image: {e}', 500
 
 if __name__ == '__main__':
