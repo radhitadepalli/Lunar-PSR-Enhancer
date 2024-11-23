@@ -5,6 +5,7 @@ from skimage import exposure
 import io
 from flask_cors import CORS
 import os
+import traceback
 
 print("Starting Flask application...")
 
@@ -128,6 +129,7 @@ def process_image():
         return send_file(img_byte_arr, mimetype='image/png')
     except Exception as e:
         print(f"Error processing image: {e}")
+        traceback.print_exc()  # Print the full traceback
         return f'Error processing image: {e}', 500
 
 if __name__ == '__main__':
