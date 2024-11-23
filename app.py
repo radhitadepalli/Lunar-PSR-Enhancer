@@ -85,20 +85,23 @@ def adaptive_histogram_equalization(image):
 
 @app.route('/process-image', methods=['POST'])
 def process_image():
-    if not request.data:
+    if 'file' not in request.files:
         return 'No file uploaded.', 400
+
+    file = request.files['file']
+    image_bytes = file.read()
 
     try:
         # Check if data is received
-        data_length = len(request.data)
+        data_length = len(image_bytes)
         if data_length == 0:
             return 'No data received.', 400
 
         # Log the first few bytes of the data to verify it is received correctly
-        print(f"First 100 bytes of data: {request.data[:100]}")
+        print(f"First 100 bytes of data: {image_bytes[:100]}")
 
         # Load image
-        image = load_image(request.data)
+        image = load_image(image_bytes)
         if image is None:
             return 'Failed to load image.', 400
 
