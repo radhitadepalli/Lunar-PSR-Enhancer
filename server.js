@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -7,22 +6,15 @@ const axios = require('axios');
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json({ limit: '1gb' })); // Increase body parser limit to 1 GB
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: true })); // Increase body parser limit to 1 GB
-
 
 const corsOptions = {
-  origin: 'https://lunar-psr-enhancer.onrender.com',
+  origin: 'https://lunar-psr-enhancer.onrender.com', // Update this to match your HTML page origin
   optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
-
-
-
-
+app.use(bodyParser.json({ limit: '1gb' })); // Increase body parser limit to 1 GB
+app.use(bodyParser.urlencoded({ limit: '1gb', extended: true })); // Increase body parser limit to 1 GB
 
 // Set up multer for file uploads
 const upload = multer({ limits: { fileSize: 1024 * 1024 * 1024 } }); // 1 GB limit
