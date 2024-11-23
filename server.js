@@ -31,7 +31,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: 'https://flask-server-qels.onrender.com', // Flask server URL
+      url: 'https://flask-server-qels.onrender.com/process-image', // Flask server URL
       data: req.file.buffer,
       headers: {
         'Content-Type': 'application/octet-stream',
@@ -46,7 +46,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
     res.send(response.data);
   } catch (error) {
     console.error('Error processing image:', error.response ? error.response.data : error.message);
-    res.status(500).send('Error processing image.');
+    res.status(500).send(`Error processing image: ${error.response ? error.response.data.toString() : error.message}`);
   }
 });
 
