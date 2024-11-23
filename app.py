@@ -6,6 +6,7 @@ import io
 from flask_cors import CORS
 import os
 import traceback
+import tempfile
 
 print("Starting Flask application...")
 
@@ -15,7 +16,7 @@ CORS(app)
 print("Flask application initialized.")
 
 # Set maximum content length to handle large file uploads
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024  # 1 GB limit
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB limit
 
 # Enable debug mode if FLASK_ENV is set to development
 if os.getenv('FLASK_ENV') == 'development':
@@ -118,16 +119,17 @@ def process_image():
         if equalized_image is None:
             return 'Failed to apply adaptive histogram equalization.', 500
 
-        # Encode image to PNG
-        img_byte_arr = io.BytesIO()
-        success, encoded_image = cv2.imencode('.png', equalized_image)
-        if not success:
-            return 'Failed to encode image.', 500
-        img_byte_arr.write(encoded_image)
-        img_byte_arr.seek(0)
+        # Use a temporary file to reduce memory usage
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_file:
+            success, encoded_image = cv2.imencode('.png', equalized_image)
+            if not success:
+                return 'Failed to encode image.', 500
+            temp_file.write(encoded_image)
+            temp_file_path = temp_file.name
+
         print("Image encoding completed successfully")
 
-        return send_file(img_byte_arr, mimetype='image/png')
+        return send_file(temp_file_path, mimetype='image/png')
     except Exception as e:
         print(f"Error processing image: {e}")
         traceback.print_exc()  # Print the full traceback
