@@ -16,7 +16,7 @@ CORS(app)
 print("Flask application initialized.")
 
 # Set maximum content length to handle large file uploads
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB limit
 
 # Enable debug mode if FLASK_ENV is set to development
 if os.getenv('FLASK_ENV') == 'development':
@@ -93,6 +93,9 @@ def process_image():
         data_length = len(request.data)
         if data_length == 0:
             return 'No data received.', 400
+
+        # Log the first few bytes of the data to verify it is received correctly
+        print(f"First 100 bytes of data: {request.data[:100]}")
 
         # Load image
         image = load_image(request.data)
