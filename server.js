@@ -8,7 +8,8 @@ const SibApiV3Sdk = require('sib-api-v3-sdk');
 const app = express();
 
 const corsOptions = {
-  origin: '*', 
+  // origin: ['https://lunar-psr-enhancer.onrender.com', 'null'], // Allow both the hosted origin and file:// origin
+  origin: '*', // Allow both the hosted origin and file:// origin
   optionsSuccessStatus: 200
 };
 

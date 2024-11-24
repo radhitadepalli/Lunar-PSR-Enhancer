@@ -637,14 +637,14 @@ https://templatemo.com/tm-562-space-dynamic
       const spinner = document.getElementById('spinner');
       spinner.style.display = 'inline-block'; // Show the spinner
 
-      fetch('https://node-js-server-fuxf.onrender.com/process-image', {
-        method: 'POST',
-        body: formData
-      })
-      // fetch('http://localhost:3000/process-image', {
+      // fetch('https://node-js-server-fuxf.onrender.com/process-image', {
       //   method: 'POST',
       //   body: formData
       // })
+      fetch('http://localhost:3000/process-image', {
+        method: 'POST',
+        body: formData
+      })
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok: ' + response.statusText);
