@@ -28,6 +28,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
 
   try {
     console.log(`Processing file: ${req.file.originalname}, size: ${req.file.size} bytes`);
+    console.log(`File buffer length: ${req.file.buffer.length}`);
 
     const response = await axios({
       method: 'post',
