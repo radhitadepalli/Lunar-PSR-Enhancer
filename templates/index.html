@@ -658,6 +658,11 @@ https://templatemo.com/tm-562-space-dynamic
           link.href = url;
           link.download = 'enhanced_image.png';
           link.textContent = 'Download Enhanced Image';
+          // Remove the latest link before appending the new one
+          const fileList = document.getElementById('file-list');
+          if (fileList.lastChild && fileList.lastChild.tagName === 'A') {
+                    fileList.removeChild(fileList.lastChild);
+          }
           document.getElementById('file-list').appendChild(link);
         })
         .catch(error => {
