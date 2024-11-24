@@ -27,6 +27,7 @@ print("Configuration set.")
 def load_image(image_bytes):
     try:
         print(f"Received image bytes: {len(image_bytes)} bytes")
+        print(f"First 100 bytes of data: {image_bytes[:100]}")
         image = cv2.imdecode(np.frombuffer(image_bytes, np.uint8), cv2.IMREAD_GRAYSCALE)
         if image is None:
             raise ValueError("Image could not be loaded.")
