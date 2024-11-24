@@ -85,11 +85,10 @@ def adaptive_histogram_equalization(image):
 
 @app.route('/process-image', methods=['POST'])
 def process_image():
-    if 'file' not in request.files:
+    if not request.data:
         return 'No file uploaded.', 400
 
-    file = request.files['file']
-    image_bytes = file.read()
+    image_bytes = request.data
 
     try:
         # Check if data is received
