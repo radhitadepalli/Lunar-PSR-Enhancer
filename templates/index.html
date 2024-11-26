@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <link rel="shortcut icon" href="assets\images\title bar head image.png" type="x-icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
@@ -203,30 +204,24 @@ https://templatemo.com/tm-562-space-dynamic
                   </form>
                 </div> -->
                 <div style="margin-top: 100px;">
-                  <form id="upload-form" class="upload-form"
-                    action="https://node-js-server-fuxf.onrender.com/process-image" method="POST"
-                    enctype="multipart/form-data">
                   <!-- <form id="upload-form" class="upload-form"
-                    action="http://localhost:3000/process-image" method="POST"
+                    action="https://node-js-server-fuxf.onrender.com/process-image" method="POST"
                     enctype="multipart/form-data"> -->
-                    <h1>Upload Image to be Enhanced</h1>
-                    <label class="custom-file-input">
-                      Choose a file
-                      <input type="file" name="image" accept="image/*" required id="file-input">
-                    </label>
-                    <div style="display: flex; align-items: center;">
-                      <button type="submit" class="main-button" style="right:-147px; top:137px">Process Image</button>
-                      <div class="spinner" id="spinner"></div>
-                    </div>
+                    <form id="upload-form" class="upload-form" action="http://localhost:3000/process-image" method="POST" enctype="multipart/form-data">
+                      <h1>Upload Image to be Enhanced</h1>
+                      <label class="custom-file-input">
+                          Choose a file
+                          <input type="file" name="file" accept="image/*" required id="file-input">
+                      </label>
+                      <div style="display: flex; align-items: center;">
+                          <button type="submit" class="main-button" style="right:-147px; top:137px">Process Image</button>
+                          <div class="spinner" id="spinner"></div>
+                      </div>
                   </form>
                   <div>
-                    <fieldset id="file-list"
-                      style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
-                    </fieldset>
+                      <fieldset id="file-list" style="border:none; margin-top: 140px; background-color: transparent !important; color:white"></fieldset>
                   </div>
-                  <div id="processed-image-list"
-                    style="border:none; margin-top: 140px; background-color: transparent !important; color:white">
-                  </div>
+                  <div id="processed-image-list" style="border:none; margin-top: 140px; background-color: transparent !important; color:white"></div>
                 </div>
 
 
@@ -453,80 +448,6 @@ https://templatemo.com/tm-562-space-dynamic
     </div>
   </div>
 
-  <!-- <div id="blog" class="our-blog section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="section-heading">
-            <h2>Check Out What Is <em>Trending</em> In Our Latest <span>News</span></h2>
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="top-dec">
-            <img src="assets/images/blog-dec.png" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="left-image">
-            <a href="#"><img src="assets/images/big-blog-thumb.jpg" alt="Workspace Desktop"></a>
-            <div class="info">
-              <div class="inner-content">
-                <ul>
-                  <li><i class="fa fa-calendar"></i> 24 Mar 2021</li>
-                  <li><i class="fa fa-users"></i> TemplateMo</li>
-                  <li><i class="fa fa-folder"></i> Branding</li>
-                </ul>
-                <a href="#"><h4>SEO Agency &amp; Digital Marketing</h4></a>
-                <p>Lorem ipsum dolor sit amet, consectetur and sed doer ket eismod tempor incididunt ut labore et dolore magna...</p>
-                <div class="main-blue-button">
-                  <a href="#">Discover More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.25s">
-          <div class="right-list">
-            <ul>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 18 Mar 2021</span>
-                  <a href="#"><h4>New Websites &amp; Backlinks</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="assets/images/blog-thumb-01.jpg" alt=""></a>
-                </div>
-              </li>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 14 Mar 2021</span>
-                  <a href="#"><h4>SEO Analysis &amp; Content Ideas</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="assets/images/blog-thumb-01.jpg" alt=""></a>
-                </div>
-              </li>
-              <li>
-                <div class="left-content align-self-center">
-                  <span><i class="fa fa-calendar"></i> 06 Mar 2021</span>
-                  <a href="#"><h4>SEO Tips &amp; Digital Marketing</h4></a>
-                  <p>Lorem ipsum dolor sit amsecteturii and sed doer ket eismod...</p>
-                </div>
-                <div class="right-image">
-                  <a href="#"><img src="assets/images/blog-thumb-01.jpg" alt=""></a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div id="contact1" class="contact-us section" style="margin-top:140px">
     <div class="container">
       <div class="row">
@@ -630,48 +551,43 @@ https://templatemo.com/tm-562-space-dynamic
         fileList.appendChild(fileItem);
       }
     });
-    //image processing
+    //image processing script
     document.getElementById('upload-form').addEventListener('submit', function (event) {
-      event.preventDefault();
-      const formData = new FormData(this);
-      const spinner = document.getElementById('spinner');
-      spinner.style.display = 'inline-block'; // Show the spinner
+    event.preventDefault();
+    const formData = new FormData(this);
+    const spinner = document.getElementById('spinner');
+    spinner.style.display = 'inline-block'; // Show the spinner
 
-      fetch('https://node-js-server-fuxf.onrender.com/process-image', {
+    fetch('http://localhost:3000/process-image', {
         method: 'POST',
         body: formData
-      })
-      // fetch('http://localhost:3000/process-image', {
-      //   method: 'POST',
-      //   body: formData
-      // })
-        .then(response => {
-          if (!response.ok) {
+    })
+    .then(response => {
+        if (!response.ok) {
             throw new Error('Network response was not ok: ' + response.statusText);
-          }
-          return response.blob();
-        })
-        .then(blob => {
-          spinner.style.display = 'none'; // Hide the spinner
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'enhanced_image.png';
-          link.textContent = 'Download Enhanced Image';
-          // Remove the latest link before appending the new one
-          const fileList = document.getElementById('file-list');
-          if (fileList.lastChild && fileList.lastChild.tagName === 'A') {
-                    fileList.removeChild(fileList.lastChild);
-          }
-          document.getElementById('file-list').appendChild(link);
-        })
-        .catch(error => {
-          spinner.style.display = 'none'; // Hide the spinner
-          console.error('Error:', error);
-          alert('There was an error processing the image. Please try again.');
-        });
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        spinner.style.display = 'none'; // Hide the spinner
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'enhanced_image.png';
+        link.textContent = 'Download Enhanced Image';
+        // Remove the latest link before appending the new one
+        const fileList = document.getElementById('file-list');
+        if (fileList.lastChild && fileList.lastChild.tagName === 'A') {
+            fileList.removeChild(fileList.lastChild);
+        }
+        document.getElementById('file-list').appendChild(link);
+    })
+    .catch(error => {
+        spinner.style.display = 'none'; // Hide the spinner
+        console.error('Error:', error);
+        alert('There was an error processing the image. Please try again.');
     });
-
+});
     // Email sending script
     document.getElementById('contact').addEventListener('submit', function (event) {
       event.preventDefault();

@@ -6,7 +6,6 @@ import io
 from flask_cors import CORS
 import os
 import traceback
-import tempfile
 
 print("Starting Flask application...")
 
@@ -86,16 +85,27 @@ def adaptive_histogram_equalization(image):
 
 @app.route('/process-image', methods=['POST'])
 def process_image():
+    print("Received a request to /process-image")
+    print("Request Headers:", request.headers)
+    print("Request Content-Type:", request.content_type)
+
     if 'file' not in request.files:
+        print("No file part in the request.")
         return 'No file uploaded.', 400
 
     file = request.files['file']
-    image_bytes = file.read()
+    if file.filename == '':
+        print("No file selected for uploading.")
+        return 'No file uploaded.', 400
 
     try:
+        image_bytes = file.read()
+        print(f"File received: {file.filename}, size: {len(image_bytes)} bytes")
+
         # Check if data is received
         data_length = len(image_bytes)
         if data_length == 0:
+            print("No data received in the file.")
             return 'No data received.', 400
 
         # Log the first few bytes of the data to verify it is received correctly
@@ -126,21 +136,24 @@ def process_image():
         if equalized_image is None:
             return 'Failed to apply adaptive histogram equalization.', 500
 
-        # Use a temporary file to reduce memory usage
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_file:
-            success, encoded_image = cv2.imencode('.png', equalized_image)
-            if not success:
-                return 'Failed to encode image.', 500
-            temp_file.write(encoded_image)
-            temp_file_path = temp_file.name
+        # Encode image to PNG format
+        success, encoded_image = cv2.imencode('.png', equalized_image)
+        if not success:
+            print("Failed to encode image.")
+            return 'Failed to encode image.', 500
+
+        # Send the image directly from memory
+        img_byte_arr = io.BytesIO(encoded_image)
+        img_byte_arr.seek(0)
 
         print("Image encoding completed successfully")
+        print(f"Encoded image size: {len(encoded_image)} bytes")
 
-        return send_file(temp_file_path, mimetype='image/png')
+        return send_file(img_byte_arr, mimetype='image/png', as_attachment=True, download_name='enhanced_image.png')
     except Exception as e:
         print(f"Error processing image: {e}")
         traceback.print_exc()  # Print the full traceback
-        return f'Error processing image: {e}', 500
+        return 'Error processing image.', 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const cors = require('cors');
 const axios = require('axios');
+const FormData = require('form-data');
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 
 const app = express();
 
 const corsOptions = {
-  // origin: ['https://lunar-psr-enhancer.onrender.com', 'null'], // Allow both the hosted origin and file:// origin
-  origin: '*', // Allow both the hosted origin and file:// origin
+  origin: '*', // Allow all origins
   optionsSuccessStatus: 200
 };
 
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ limit: '1gb', extended: true })); // Increase bo
 const upload = multer({ limits: { fileSize: 1024 * 1024 * 1024 } }); // 1 GB limit
 
 // POST route to handle image processing
-app.post('/process-image', upload.single('image'), async (req, res) => {
+app.post('/process-image', upload.single('file'), async (req, res) => {
   if (!req.file) {
     console.error('No file uploaded.');
     return res.status(400).send('No file uploaded.');
@@ -31,14 +31,12 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
     console.log(`Processing file: ${req.file.originalname}, size: ${req.file.size} bytes`);
     console.log(`File buffer length: ${req.file.buffer.length}`);
 
-    const response = await axios({
-      method: 'post',
-      url: 'https://flask-server-qels.onrender.com/process-image', // Flask server URL
-      // url: 'http://localhost:5000/process-image', // Flask server URL
-      data: req.file.buffer,
+    const formData = new FormData();
+    formData.append('file', req.file.buffer, req.file.originalname);
+
+    const response = await axios.post('http://localhost:5000/process-image', formData, {
       headers: {
-        'Content-Type': 'application/octet-stream',
-        'Content-Length': req.file.buffer.length,
+        ...formData.getHeaders(),
       },
       responseType: 'arraybuffer', // Expect binary response
       maxContentLength: Infinity, // Allow large content lengths
@@ -46,7 +44,7 @@ app.post('/process-image', upload.single('image'), async (req, res) => {
     });
 
     res.set('Content-Type', 'image/png');
-    res.send(response.data);
+    res.send(Buffer.from(response.data, 'binary'));
   } catch (error) {
     console.error('Error processing image:', error.response ? error.response.data : error.message);
     res.status(500).send(`Error processing image: ${error.response ? error.response.data.toString() : error.message}`);
