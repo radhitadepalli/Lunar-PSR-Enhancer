@@ -34,7 +34,11 @@ app.post('/process-image', upload.single('file'), async (req, res) => {
     const formData = new FormData();
     formData.append('file', req.file.buffer, req.file.originalname);
 
-    const response = await axios.post('http://localhost:5000/process-image', formData, {
+    // const response = await axios.post('http://localhost:5000/process-image', formData, {
+    //   headers: {
+    //     ...formData.getHeaders(),
+    //   },
+    const response = await axios.post('https://flask-server-qels.onrender.com/process-image', formData, {
       headers: {
         ...formData.getHeaders(),
       },
