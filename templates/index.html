@@ -519,9 +519,13 @@ https://templatemo.com/tm-562-space-dynamic
   </footer>
   <!-- Scripts -->
   <script>
-    window.onload = function() {
-    alert("Image processing currently not working due to limitations of the free-tier server on render.com. Please contact us for more information.");
-  };
+    // Show alert message after the page has fully loaded
+  // Show alert message 5 seconds after the page has fully loaded
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      alert("Image processing currently not working due to limitations of the free-tier server on render.com. Please contact us for more information.");
+    }, 5000); // 5000 milliseconds = 5 seconds
+  });
     // File input script
     const fileInput = document.getElementById('file-input');
     const fileList = document.getElementById('file-list');
